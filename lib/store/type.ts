@@ -1,5 +1,4 @@
 
-
 export interface IUserInitialState {
     name : string | null , 
     address : string | null
