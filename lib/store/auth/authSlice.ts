@@ -34,7 +34,7 @@ export function registerUser(data:IRegisterData){
         try {
             const response = await API.post("auth/register",data)
             if(response.status === 201){
-                // k garne tw hami ???
+                
                 
                 dispatch(setStatus(Status.SUCCESS))
             }else{
