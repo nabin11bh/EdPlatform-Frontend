@@ -7,10 +7,11 @@ import  { API,APIWITHTOKEN } from "@/lib/http";
 
 const initialState:IInstituteInitialData = {
     institute : {
-        instituteAddress : "", 
-        instituteEmail : "", 
-        institutePhoneNumber : "", 
-        instituteName : ""
+        instituteAddress: "",
+        instituteEmail: "",
+        institutePhoneNumber: "",
+        instituteName: "",
+        instituteNumber: ""
     }, 
 
     status : Status.LOADING

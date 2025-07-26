@@ -12,6 +12,7 @@ function becomeInstitute(){
         instituteAddress : "", 
         instituteEmail : "", 
         instituteName : "", 
+        instituteNumber :"",
         institutePhoneNumber : "", 
         institutePanNumber : "", 
         instituteVatNumber : ""
@@ -57,6 +58,8 @@ function becomeInstitute(){
       <div>
         <input type="text" placeholder="Institute Name" className="w-full px-4 py-2 border border-gray-300 rounded-lg text-gray-700 focus:outline-none focus:ring focus:ring-blue-100" name="instituteName" onChange={handleChange} />
       </div>
+    
+     
       {/* Mobile Number */}
       <div>
         <input type="text" placeholder="Phone Number" className="w-full px-4 py-2 border border-gray-300 rounded-lg text-gray-700 focus:outline-none focus:ring focus:ring-blue-100" name="institutePhoneNumber" onChange={handleChange} />
