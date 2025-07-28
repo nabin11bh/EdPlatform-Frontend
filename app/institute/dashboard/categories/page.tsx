@@ -21,7 +21,7 @@ function InstituteCategories(){
     const openModal = ()=>setIsModalOpen(true)
     const closeModal = ()=>setIsModalOpen(false)
 
-    let filteredData = categories.filter((category)=>category.categoryName.includes(searchedText) || category.id.includes(searchedText) || category.categoryDescription.includes(searchedText))
+    let filteredData = categories.filter((category)=>category.categoryName.includes(searchedText) || category.id.toString().includes(searchedText) || category.categoryDescription.includes(searchedText))
     return(
     <div className="flex flex-col">
   <div className=" overflow-x-auto">
