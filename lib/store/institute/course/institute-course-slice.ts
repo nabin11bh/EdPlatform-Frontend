@@ -1,8 +1,10 @@
 import { Status } from "@/lib/types/types";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { AppDispatch } from "../../store";
-import API from "@/lib/http";
-import { IInstituteCourseInitialData } from "./institute-course-type";
+
+import { ICoursePostData, IInstituteCourseInitialData } from "./institute-course-type";
+import {API} from "@/lib/http/index";
+import {APIWITHTOKEN} from "@/lib/http/index";
 
 const initialState:IInstituteCourseInitialData  = {
     status : Status.LOADING, 
@@ -42,10 +44,10 @@ const {setStatus,setCourse,setDeleteCourse,setEditCourse} = instituteCourseSlice
 export default instituteCourseSlice.reducer
 
 // thunks 
-export function createInstituteCourse(data:any){
+export function createInstituteCourse(data:ICoursePostData){
     return async function createInstituteCourseThunk(dispatch:AppDispatch){
         try {
-            const response = await API.post("/institute/course",data)
+            const response = await APIWITHTOKEN.post("/institute/course",data)
             if(response.status === 201){
                 dispatch(setStatus(Status.SUCCESS))
             }else{
@@ -62,7 +64,7 @@ export function createInstituteCourse(data:any){
 export function fetchInstituteCourse(){
     return async function fetchInstituteCourseThunk(dispatch:AppDispatch){
         try {
-            const response = await API.get("/institute/course")
+            const response = await APIWITHTOKEN.get("/institute/course")
             if(response.status === 201){
                 dispatch(setStatus(Status.SUCCESS))
                 response.data.data.length > 0 && dispatch(setCourse(response.data.data))
