@@ -3,10 +3,11 @@ import { IInstituteTeacherInitialData, IInstituteTeacherInitialDataTeacher, Teac
 import { Status } from "@/lib/types/types";
 import { AppDispatch } from "../../store";
 import {APIWITHTOKEN} from "@/lib/http/index";
+import { ITeacherPostData } from "../../teacher/teacherSlice.types";
 
 
 const initialState:IInstituteTeacherInitialData = {
-    teachers :[], 
+    teachers :[],
     status : Status.LOADING
 }
 
@@ -18,19 +19,29 @@ const insituteTeacherSlice = createSlice({
         setStatus(state:IInstituteTeacherInitialData, action : PayloadAction<Status>){
             state.status = action.payload
         }, 
-        setTeacher(state:IInstituteTeacherInitialData, action:PayloadAction<IInstituteTeacherInitialDataTeacher>){
-            state.teachers.push(action.payload)
+        setTeacher(state:IInstituteTeacherInitialData, action:PayloadAction<IInstituteTeacherInitialDataTeacher[]>){
+            state.teachers = action.payload
+        }, 
+        removeTeacherById(state:IInstituteTeacherInitialData,action:PayloadAction<string>){
+            const index = state.teachers.findIndex((teacher)=>teacher.id === action.payload)
+            if(index !== -1){
+                state.teachers.splice(index,1)
+            }
         }
     }
 })
 
-export const {setStatus,setTeacher} = insituteTeacherSlice.actions
+export const {setStatus,setTeacher,removeTeacherById} = insituteTeacherSlice.actions
 export default insituteTeacherSlice.reducer
 
-export function createInstituteTeacher(data:IInstituteTeacherInitialDataTeacher){
+export function createInstituteTeacher(data:ITeacherPostData){
     return async function createInstituteTeacherThunk(dispatch:AppDispatch){
         try {
-            const response = await APIWITHTOKEN.post("/institute/teacher",data )
+            const response = await APIWITHTOKEN.post("/institute/teacher",data,{
+                headers : {
+                    "Content-Type" : "multipart/form-data"
+                }
+            } )
             if(response.status === 201){
                 dispatch(setStatus(Status.SUCCESS))
             }else{
@@ -51,6 +62,7 @@ export function fetchInsituteTeacher(){
             if(response.status === 200){
                 dispatch(setStatus(Status.SUCCESS))
                response.data.data.length > 0 && dispatch(setTeacher(response.data.data))
+               
             }else{
                 dispatch(setStatus(Status.ERROR))
             }
@@ -69,6 +81,7 @@ export function deleteInsituteTeacherById(id:string){
             if(response.status === 200){
                 dispatch(setStatus(Status.SUCCESS))
                // popout teacher of that id from slice too 
+                dispatch(removeTeacherById(id))
             }else{
                 dispatch(setStatus(Status.ERROR))
             }

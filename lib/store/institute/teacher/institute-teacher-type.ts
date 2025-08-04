@@ -16,6 +16,7 @@ interface IInstituteTeacherInitialDataTeacherCourse{
 export interface IInstituteTeacherInitialDataTeacher{
 teacherName : string | null,
 teacherEmail :string | null ,
+id : string,
 teacherPhoneNumber : string,
 teacherExpertise : TeacherExpertise ,
 teacherSalary : string,
@@ -24,6 +25,7 @@ teacherPhoto : string,
 }
 
 interface IInitialTeacherDataWithCourse extends IInstituteTeacherInitialDataTeacher{
+id: string;
 course ?: IInstituteTeacherInitialDataTeacherCourse
 
 }
